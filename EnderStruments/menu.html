@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Онлайн Инструменты</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      flex-direction: column;
+    }
+    body {
+      flex: 1;
+    }
+    header {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .topbar {
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .topbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    .topbar a:hover {
+      color: #1abc9c;
+    }
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex: 1;
+      padding: 2rem;
+    }
+    nav button {
+      width: 100%;
+      max-width: 600px;
+      background: linear-gradient(90deg, #1abc9c, #16a085);
+      border: none;
+      padding: 2rem;
+      color: white;
+      border-radius: 12px;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    nav button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    #content {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .calculator {
+      width: 100%;
+      max-width: 300px;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .calculator input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+    .calculator .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+    .calculator button {
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #ecf0f1;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .calculator button:hover {
+      background-color: #bdc3c7;
+      transform: scale(1.05);
+    }
+    .back-button {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .back-button:hover {
+      background-color: #2980b9;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>Меню</div>
+    <div>
+      <a onclick="goBack()">Главная</a>
+      <a onclick="showContacts()">Контакты</a>
+      <a onclick="showAbout()">О нас</a>
+    </div>
+  </div>
+  <header>
+    <h1>Онлайн Инструменты</h1>
+  </header>
+  <nav id="mainMenu">
+    <button onclick="navigateTo('calculator')">Калькулятор</button>
+    <button onclick="navigateTo('guess')">Угадай число</button>
+    <button onclick="navigateTo('coming')">Пока ничего</button>
+  </nav>
+  <div id="content"></div>
+  <footer>Ринат 2025</footer>
+  <script>
+    function navigateTo(section) {
+      if (section === 'calculator') {
+        showCalculatorPage();
+      } else if (section === 'guess') {
+        showGuessGame();
+      } else if (section === 'coming') {
+        showComingSoon();
+      }
+      document.getElementById('mainMenu').style.display = 'none';
+    }
+
+    function showComingSoon() {
+      document.getElementById('content').innerHTML = `
+        <button class="back-button" onclick="goBack()">Назад</button>
+        <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 400px; text-align: center;">
+          <h2>В разработке</h2>
+          <p>Этот инструмент пока в разработке.</p>
+        </div>
+      `;
+    }
+
+    function showCalculatorPage() {
+      document.getElementById('content').innerHTML = `
+        <button class="back-button" onclick="goBack()">Назад</button>
+        <div class="calculator">
+          <input type="text" id="calcDisplay" readonly />
+          <div class="buttons">
+            <button onclick="appendCalc('7')">7</button>
+            <button onclick="appendCalc('8')">8</button>
+            <button onclick="appendCalc('9')">9</button>
+            <button onclick="appendCalc('/')">/</button>
+            <button onclick="appendCalc('4')">4</button>
+            <button onclick="appendCalc('5')">5</button>
+            <button onclick="appendCalc('6')">6</button>
+            <button onclick="appendCalc('*')">*</button>
+            <button onclick="appendCalc('1')">1</button>
+            <button onclick="appendCalc('2')">2</button>
+            <button onclick="appendCalc('3')">3</button>
+            <button onclick="appendCalc('-')">-</button>
+            <button onclick="appendCalc('0')">0</button>
+            <button onclick="appendCalc('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="appendCalc('+')">+</button>
+            <button onclick="clearCalc()" style="grid-column: span 4; background-color: #e74c3c; color: white;">C</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function showGuessGame() {
+      document.getElementById('content').innerHTML = `
+        <button class="back-button" onclick="goBack()">Назад</button>
+        <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 400px; text-align: center;">
+          <h2>Угадай число</h2>
+          <p>Я загадал число от 1 до 100. Попробуй угадать!</p>
+          <input type="number" id="guessInput" placeholder="Введите число" />
+          <button onclick="checkGuess()">Проверить</button>
+          <p id="guessResult"></p>
+        </div>
+      `;
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+    }
+
+    let secretNumber;
+
+    function checkGuess() {
+      const input = document.getElementById('guessInput');
+      const result = document.getElementById('guessResult');
+      const guess = parseInt(input.value);
+
+      if (isNaN(guess)) {
+        result.textContent = 'Пожалуйста, введите число';
+        return;
+      }
+
+      if (guess < secretNumber) {
+        result.textContent = 'Слишком мало!';
+      } else if (guess > secretNumber) {
+        result.textContent = 'Слишком много!';
+      } else {
+        result.textContent = 'Правильно!';
+      }
+    }
+
+    function appendCalc(value) {
+      const display = document.getElementById('calcDisplay');
+      display.value += value;
+    }
+
+    function clearCalc() {
+      document.getElementById('calcDisplay').value = '';
+    }
+
+    function calculateResult() {
+      const display = document.getElementById('calcDisplay');
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = 'Ошибка';
+      }
+    }
+
+    function goBack() {
+      document.getElementById('mainMenu').style.display = 'flex';
+      document.getElementById('content').innerHTML = '';
+    }
+
+    function showContacts() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('content').innerHTML = `
+        <button class="back-button" onclick="goBack()">Назад</button>
+        <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 400px; text-align: center;">
+          <h2>Контакты</h2>
+          <p>Связаться с Ринатом можно через Telegram: @EnderStal</p>
+        </div>
+      `;
+    }
+
+    function showAbout() {
+      document.getElementById('mainMenu').style.display = 'none';
+      document.getElementById('content').innerHTML = `
+        <button class="back-button" onclick="goBack()">Назад</button>
+        <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 500px; text-align: center;">
+          <h2>О нас</h2>
+          <p>Этот сайт создан Ринатом, юным разработчиком, родившимся 4 июля 2013 года. Здесь собраны простые и полезные онлайн-инструменты.</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
